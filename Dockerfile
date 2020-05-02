@@ -2,7 +2,7 @@ FROM node:10-alpine3.9
 
 RUN mkdir /app
 WORKDIR /app
-COPY . /api
+COPY . /app
 
 CMD [ "npm", "start" ]
 
