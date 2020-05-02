@@ -1,0 +1,16 @@
+{
+  "name": "aws-ecs-continuous-deployment",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test.js"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
