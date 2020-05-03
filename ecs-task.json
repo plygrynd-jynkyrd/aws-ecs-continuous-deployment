@@ -8,14 +8,16 @@
           "containerPort": 7000
         }
       ],
-      "name": "cd",
+      "name": "sample-cd",
       "cpu": 0,
       "memory": null,
-      "image": "<IMAGE1_NAME>",
+      "image": "leonardiwagner/cd",
       "essential": true
     }
   ],
   "requiresCompatibilities": [
     "FARGATE"
-  ]
+  ],
+  "executionRoleArn": "arn:aws:iam::810028704317:role/ecsTaskExecutionRole",
+  "family": "cd-task"
 }

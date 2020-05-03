@@ -4,6 +4,7 @@ env:
     DOCKER_IMAGE_NAME: leonardiwagner/cd:master
     AWS_CLUSTER_NAME: cdcluster
     AWS_SERVICE_NAME: cdservice
+    AWS_TASK_NAME: cd-task
 phases:
   install:
     runtime-versions:
@@ -23,4 +24,5 @@ phases:
       - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - docker build -t $DOCKER_IMAGE_NAME .
       - docker push $DOCKER_IMAGE_NAME
-      - aws ecs update-service --force-new-deployment --service $AWS_SERVICE_NAME --cluster $AWS_CLUSTER_NAME --desired-count 1 --force-new-deployment  
+      - aws ecs register-task-definition --cli-input-json file://./ecs-task.json
+      - aws ecs update-service --service $AWS_SERVICE_NAME --cluster $AWS_CLUSTER_NAME --desired-count 1 --task-definition AWS_TASK_NAME
