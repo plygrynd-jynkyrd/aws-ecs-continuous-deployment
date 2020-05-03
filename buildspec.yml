@@ -1,7 +1,9 @@
 version: 0.2
 env:
   variables:
-    ECR_REPO: 810028704317.dkr.ecr.us-west-2.amazonaws.com/leonardiwagner
+    DOCKER_IMAGE_NAME: leonardiwagner/cd:master
+    AWS_CLUSTER_NAME: cdclusterUpdate
+    AWS_SERVICE_NAME: cdservice
 phases:
   install:
     runtime-versions:
@@ -20,14 +22,7 @@ phases:
       - npm test
   post_build:
     commands:
-      - docker build -t $ECR_REPO .
-      - docker tag $ECR_REPO:latest $ECR_REPO
-      - docker push $ECR_REPO
-      - echo 'docker image uploaded, generating imagedefinitions.json'
-      - printf '[{"name":"cd-container","imageUri":"%s"}]' $ECR_REPO:latest > imagedefinitions.json
-      - cat imagedefinitions.json
-artifacts:
-  files:
-    - appspec.yaml
-    - imagedefinitions.json
-    - taskdef.json
+      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - docker build -t $DOCKER_IMAGE_NAME .
+      - docker push $DOCKER_IMAGE_NAME
+      - aws ecs update-service --force-new-deployment --service $AWS_SERVICE_NAME --cluster $AWS_CLUSTER_NAME --desired-count 1 --force-new-deployment  
