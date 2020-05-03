@@ -14,8 +14,6 @@ phases:
       - node --version
       - echo "Docker version:"
       - docker --version
-      - echo "Logging to ECR..."
-      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REPO
   build:
     commands:
       - npm i
