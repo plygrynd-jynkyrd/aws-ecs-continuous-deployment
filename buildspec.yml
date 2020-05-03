@@ -1,25 +1,30 @@
 version: 0.2
-
+env:
+  variables:
+    ECR_REPO=810028704317.dkr.ecr.us-west-2.amazonaws.com/leonardiwagner
 phases:
   install:
     runtime-versions:
       nodejs: 10
   pre_build:
     commands:
-      - DOCKER_IMAGE_NAME=leonardiwagner/cd:master
-      - echo "Nodejs version"
+      - echo "Nodejs version:"
       - node --version
-      - echo "Docker version"
+      - echo "Docker version:"
       - docker --version
+      - echo "Logging to ECR..."
+      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REPO
   build:
     commands:
       - npm i
       - npm test
-      - ls -a
   post_build:
     commands:
-      - ls -a
-      - echo pushing docker image $DOCKER_IMAGE_NAME
-      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - docker build -t $DOCKER_IMAGE_NAME .
-      - docker push $DOCKER_IMAGE_NAME
+      - docker build -t $ECR_REPO .
+      - docker tag $ECR_REPO:latest $ECR_REPO
+      - docker push $ECR_REPO
+      - echo 'docker image uploaded, generating imagedefinitions.json'
+      - printf '[{"name":"cicd-container","imageUri":"$ECR_REPO:latest"}]' > imagedefinitions.json
+  artifacts:
+    files:
+      - imagedefinitions.json
