@@ -5,6 +5,8 @@ env:
     AWS_CLUSTER_NAME: cdcluster
     AWS_SERVICE_NAME: cdservice
     AWS_TASK_NAME: cd-task
+    AWS_CODE_DEPLOY_APP: AppECS-cdcluster-cdservice2
+    AWS_CODE_DEPLOY_GROUP: DgpECS-cdcluster-cdservice2
 phases:
   install:
     runtime-versions:
@@ -26,3 +28,13 @@ phases:
       - docker push $DOCKER_IMAGE_NAME
       - aws ecs register-task-definition --cli-input-json file://./ecs-task.json
       - aws ecs update-service --service $AWS_SERVICE_NAME --cluster $AWS_CLUSTER_NAME --desired-count 1 --task-definition $AWS_TASK_NAME
+      - aws deploy create-deployment --cli-input-json file://codedeploy.json
+
+      - aws ecs deploy
+        --cluster $AWS_CLUSTER_NAME
+        --service $AWS_SERVICE_NAME
+        --codedeploy-application $AWS_CODE_DEPLOY_APP
+        --codedeploy-deployment-group $AWS_CODE_DEPLOY_GROUP
+        --task-definition ecs-task.json
+        --codedeploy-appspec appspec.json
+        
