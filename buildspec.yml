@@ -2,7 +2,7 @@ version: 0.2
 env:
   variables:
     DOCKER_IMAGE_NAME: leonardiwagner/cd:master
-    AWS_CLUSTER_NAME: cdclusterUpdate
+    AWS_CLUSTER_NAME: cdcluster
     AWS_SERVICE_NAME: cdservice
 phases:
   install:
