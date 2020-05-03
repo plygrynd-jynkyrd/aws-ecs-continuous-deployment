@@ -24,7 +24,8 @@ phases:
       - docker tag $ECR_REPO:latest $ECR_REPO
       - docker push $ECR_REPO
       - echo 'docker image uploaded, generating imagedefinitions.json'
-      - printf '[{"name":"cd-container","imageUri":"%s"}]' $ECR_REPO:latest > imagedefinitions-prod.json
+      - printf '[{"name":"cd-container","imageUri":"%s"}]' $ECR_REPO:latest > imagedefinitions.json
+      - cat imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
