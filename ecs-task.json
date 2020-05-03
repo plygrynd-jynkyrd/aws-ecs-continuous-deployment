@@ -9,6 +9,8 @@
         }
       ],
       "name": "sample-cd",
+      "cpu": 256,
+      "memory": 512,
       "image": "leonardiwagner/cd",
       "essential": true
     }
