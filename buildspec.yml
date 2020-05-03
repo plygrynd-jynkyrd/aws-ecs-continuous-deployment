@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    ECR_REPO=810028704317.dkr.ecr.us-west-2.amazonaws.com/leonardiwagner
+    ECR_REPO: 810028704317.dkr.ecr.us-west-2.amazonaws.com/leonardiwagner
 phases:
   install:
     runtime-versions:
