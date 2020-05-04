@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    DOCKER_IMAGE_NAME: leonardiwagner/cd:master
+    DOCKER_IMAGE_NAME: leonardiwagner/cd:latest
     AWS_CLUSTER_NAME: cdcluster
     AWS_SERVICE_NAME: cdservice2
     AWS_TASK_NAME: cd-task
