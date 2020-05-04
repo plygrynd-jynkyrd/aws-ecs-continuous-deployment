@@ -7,7 +7,7 @@
         "Properties": {
           "TaskDefinition": "<TASK_DEFINITION>",
           "LoadBalancerInfo": {
-            "ContainerName": "cd",
+            "ContainerName": "sample-cd",
             "ContainerPort": 7000
           },
           "PlatformVersion": "LATEST"
